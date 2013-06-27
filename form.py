@@ -27,16 +27,21 @@ if __name__ == '__main__':
                      ('lat', 'Latitude (N/S)'),
                      ('lon', 'Longitude (E/W)'),
                      ('grid', 'Grid Reference'),
-                     ('grid', 'Grid Reference'),
+                     ('group', 'Sub Group'),
+                     ('series', 'Series'),
+                     ('landform', 'Landform'),
+                     ('slope-pos', 'Slope Position'),
                   )
                )
 
+    scroll = Gtk.ScrolledWindow()
+    scroll.add(form)
     box = Gtk.Box(spacing=6, orientation=Gtk.Orientation.VERTICAL)
-    box.pack_start(form, True, True, 20)
+    box.pack_start(scroll, True, True, 20)
 
     b = Gtk.Button(label='Show data')
     b.connect('clicked', form.print_data)
-    box.pack_start(b, True, True, 6)
+    box.pack_start(b, False, True, 6)
     win.add(box)
     win.connect('delete-event', Gtk.main_quit)
     win.show_all()
