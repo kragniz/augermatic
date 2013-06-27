@@ -7,12 +7,11 @@ class Form(Gtk.Box):
         self.fields = {}
         for item in items:
             box = Gtk.Box()
-            label = Gtk.Label(item['label'])
-            self.fields[item['id']] = Gtk.Entry()
+            label = Gtk.Label(item[1] + ':')
+            self.fields[item[0]] = Gtk.Entry()
             box.pack_start(label, False, False, 10)
-            box.pack_start(self.fields[item['id']], True, True, 6)
+            box.pack_start(self.fields[item[0]], True, True, 6)
             self.pack_start(box, False, True, 4)
-        print self.fields
 
     def print_data(self, event):
         for f in self.fields:
@@ -21,11 +20,15 @@ class Form(Gtk.Box):
 if __name__ == '__main__':
     win = Gtk.Window(title='Form test')
     form = Form(
-                  [
-                     {'id': 'database-no', 'label': 'Database Number'},
-                     {'id': 'name', 'label': 'Soil thing name'},
-                     {'id': 'date', 'label': 'Date'}
-                  ]
+                  (
+                     ('database-no', 'Database Number'),
+                     ('date', 'Date'),
+                     ('time', 'Time'),
+                     ('lat', 'Latitude (N/S)'),
+                     ('lon', 'Longitude (E/W)'),
+                     ('grid', 'Grid Reference'),
+                     ('grid', 'Grid Reference'),
+                  )
                )
 
     box = Gtk.Box(spacing=6, orientation=Gtk.Orientation.VERTICAL)
