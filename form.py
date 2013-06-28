@@ -22,6 +22,7 @@ class Form(Gtk.Box):
 
 if __name__ == '__main__':
     win = Gtk.Window(title='Form test')
+    win.set_default_size(500, 300)
     form = Form(
                   (
                      ('database-no', 'Database Number'),
