@@ -27,6 +27,7 @@ class Form(Gtk.Box):
 if __name__ == '__main__':
     win = Gtk.Window(title='Form test')
     win.set_default_size(500, 300)
+    b = Gtk.Box()
     form = Form(
                   (
                      ('database-no', 'Database Number'),
@@ -42,12 +43,40 @@ if __name__ == '__main__':
                      ('separator', ''),
 
                      ('slope-pos', 'Slope Position'),
-                     ('sl-deg', 'Sl deg')
+                     ('sl-deg', 'Sl deg'),
+                     ('aspect', 'Aspect')
                   )
                )
 
+    form2 = Form(
+                  (
+                     ('database-no', 'Database Number'),
+                     ('date', 'Date'),
+                     ('time', 'Time'),
+                     ('lat', 'Latitude (N/S)'),
+                     ('lon', 'Longitude (E/W)'),
+                     ('grid', 'Grid Reference'),
+                     ('group', 'Sub Group'),
+                     ('series', 'Series'),
+                     ('landform', 'Landform'),
+
+                     ('separator', ''),
+
+                     ('slope-pos', 'Slope Position'),
+                     ('sl-deg', 'Sl deg'),
+                     ('aspect', 'Aspect')
+                  )
+               )
+
+    #b.pack_start(form, True, True, 10)
+
+    hb = Gtk.Box()
+
+    hb.pack_start(form, True, True, 10)
+    hb.pack_start(form2, True, True, 10)
+
     scroll = Gtk.ScrolledWindow()
-    scroll.add(form)
+    scroll.add(hb)
     box = Gtk.Box(spacing=6, orientation=Gtk.Orientation.VERTICAL)
     box.pack_start(scroll, True, True, 20)
 
