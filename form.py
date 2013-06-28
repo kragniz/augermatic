@@ -7,18 +7,22 @@ class Form(Gtk.Box):
         self.fields = {}
         labelWidth = max([len(i[1]) for i in items])
         for item in items:
-            box = Gtk.Box()
-            label = Gtk.Label(item[1] + ':')
-            label.set_width_chars(labelWidth)
-            label.set_alignment(0, 0.5)
-            self.fields[item[0]] = Gtk.Entry()
-            box.pack_start(label, False, False, 10)
-            box.pack_start(self.fields[item[0]], True, True, 6)
+            if item[0] == 'separator':
+                self.pack_start(Gtk.HSeparator(), False, False, 6)
+            else:
+                box = Gtk.Box()
+                label = Gtk.Label(item[1] + ':')
+                label.set_width_chars(labelWidth)
+                label.set_alignment(0, 0.5)
+                self.fields[item[0]] = Gtk.Entry()
+                box.pack_start(label, False, False, 10)
+                box.pack_start(self.fields[item[0]], True, True, 6)
             self.pack_start(box, False, True, 4)
 
     def print_data(self, event):
         for f in self.fields:
             print f, ':', self.fields[f].get_text()
+        print '-' * 80
 
 if __name__ == '__main__':
     win = Gtk.Window(title='Form test')
@@ -34,7 +38,11 @@ if __name__ == '__main__':
                      ('group', 'Sub Group'),
                      ('series', 'Series'),
                      ('landform', 'Landform'),
+
+                     ('separator', ''),
+
                      ('slope-pos', 'Slope Position'),
+                     ('sl-deg', 'Sl deg')
                   )
                )
 
