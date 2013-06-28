@@ -5,9 +5,12 @@ class Form(Gtk.Box):
     def __init__(self, items):
         Gtk.Box.__init__(self, spacing=6, orientation=Gtk.Orientation.VERTICAL)
         self.fields = {}
+        labelWidth = max([len(i[1]) for i in items])
         for item in items:
             box = Gtk.Box()
             label = Gtk.Label(item[1] + ':')
+            label.set_width_chars(labelWidth)
+            label.set_alignment(0, 0.5)
             self.fields[item[0]] = Gtk.Entry()
             box.pack_start(label, False, False, 10)
             box.pack_start(self.fields[item[0]], True, True, 6)
