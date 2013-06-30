@@ -6,15 +6,23 @@ class Form(Gtk.Box):
         Gtk.Box.__init__(self, spacing=6, orientation=Gtk.Orientation.VERTICAL)
         self.fields = {}
         labelWidth = max([len(i[1]) for i in items])
+
         for item in items:
             if item[0] == 'separator':
                 self.pack_start(Gtk.HSeparator(), False, False, 6)
             else:
+                if item[0].startswith('float-'):
+                    adjustment = Gtk.Adjustment(0, 0, 2**16, 1, 10, 0)
+                    entry = Gtk.SpinButton()
+                    entry.set_adjustment(adjustment)
+                    entry.set_digits(5)
+                else:
+                    entry = Gtk.Entry()
                 box = Gtk.Box()
                 label = Gtk.Label(item[1] + ':')
                 label.set_width_chars(labelWidth)
                 label.set_alignment(0, 0.5)
-                self.fields[item[0]] = Gtk.Entry()
+                self.fields[item[0]] = entry
                 box.pack_start(label, False, False, 10)
                 box.pack_start(self.fields[item[0]], True, True, 6)
             self.pack_start(box, False, True, 4)
@@ -33,8 +41,8 @@ if __name__ == '__main__':
                      ('database-no', 'Database Number'),
                      ('date', 'Date'),
                      ('time', 'Time'),
-                     ('lat', 'Latitude (N/S)'),
-                     ('lon', 'Longitude (E/W)'),
+                     ('float-lat', 'Latitude (N/S)'),
+                     ('float-lon', 'Longitude (E/W)'),
                      ('grid', 'Grid Reference'),
                      ('group', 'Sub Group'),
                      ('series', 'Series'),
@@ -50,20 +58,20 @@ if __name__ == '__main__':
 
     form2 = Form(
                   (
-                     ('database-no', 'Database Number'),
                      ('date', 'Date'),
                      ('time', 'Time'),
+                     ('grid', 'Grid Reference'),
+                     ('series', 'Series'),
                      ('lat', 'Latitude (N/S)'),
                      ('lon', 'Longitude (E/W)'),
-                     ('grid', 'Grid Reference'),
                      ('group', 'Sub Group'),
-                     ('series', 'Series'),
+                     ('sl-deg', 'Sl deg'),
                      ('landform', 'Landform'),
 
                      ('separator', ''),
 
+                     ('database-no', 'Database Number'),
                      ('slope-pos', 'Slope Position'),
-                     ('sl-deg', 'Sl deg'),
                      ('aspect', 'Aspect')
                   )
                )
