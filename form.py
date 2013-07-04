@@ -32,6 +32,9 @@ class Form(Gtk.Box):
             print f, ':', self.fields[f].get_text()
         print '-' * 80
 
+    def get_fields(self, *args):
+        return {f:self.fields[f].get_text() for f in self.fields}
+
 if __name__ == '__main__':
     win = Gtk.Window(title='Form test')
     win.set_default_size(500, 300)
@@ -89,7 +92,7 @@ if __name__ == '__main__':
     box.pack_start(scroll, True, True, 20)
 
     b = Gtk.Button(label='Show data')
-    b.connect('clicked', form.print_data)
+    b.connect('clicked', form.get_fields)
     box.pack_start(b, False, True, 6)
     win.add(box)
     win.connect('delete-event', Gtk.main_quit)
