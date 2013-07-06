@@ -38,26 +38,34 @@ class Form(Gtk.Box):
         return {f:self.fields[f].get_text() for f in self.fields}
 
 class DateBox(Gtk.Box):
+    class CalendarPopup(Gtk.Window):
+        def __init__(self, x=0, y=0):
+            Gtk.Window.__init__(self, type=Gtk.WindowType.POPUP)
+            self.move(x, y)
+            self.cal = Gtk.Calendar()
+            box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+            self.add(box)
+            box.pack_start(self.cal, False, False, 6)
+            self.cal.show()
+
+            hbox = Gtk.Box()
+            box.pack_start(hbox, True, True, 6)
+            self.okbutton = Gtk.Button(stock=Gtk.STOCK_OK)
+            hbox.pack_end(self.okbutton, False, False, 6)
+            self.show_all()
+            self.hide()
+ 
     def __init__(self):
         Gtk.Box.__init__(self)
-
-        self.cal = Gtk.Calendar()
-        self.cal.set_display_options(Gtk.CalendarDisplayOptions.SHOW_HEADING)
-        self.cal.connect('day-selected', self.selected_date)
-        self.popup = Gtk.Window(type=Gtk.WindowType.POPUP)
-        self.box = Gtk.Box()
-        self.popup.add(self.box)
-        self.box.pack_start(self.cal, False, False, 6)
-        self.cal.show()
-        self.box.show()
-
+        self.popup = self.CalendarPopup()
         self.dateButton = Gtk.Button(label="Choose date")
         self.dateButton.connect('clicked', lambda x: self.popup.show())
+        self.popup.cal.connect('day-selected-double-click', self.selected_date)
+        self.popup.okbutton.connect('clicked', self.selected_date)
         self.pack_start(self.dateButton, False, False, 6)
 
     def selected_date(self, event):
-        print self.cal.get_date()
-        print self.cal.get_display_options()
+        print self.popup.cal.get_date()
         self.popup.hide()
 
 if __name__ == '__main__':
