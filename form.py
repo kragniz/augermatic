@@ -40,7 +40,25 @@ class Form(Gtk.Box):
 class DateBox(Gtk.Box):
     def __init__(self):
         Gtk.Box.__init__(self)
-        self.pack_start(Gtk.Calendar(), False, False, 6)
+
+        self.cal = Gtk.Calendar()
+        self.cal.set_display_options(Gtk.CalendarDisplayOptions.SHOW_HEADING)
+        self.cal.connect('day-selected', self.selected_date)
+        self.popup = Gtk.Window(type=Gtk.WindowType.POPUP)
+        self.box = Gtk.Box()
+        self.popup.add(self.box)
+        self.box.pack_start(self.cal, False, False, 6)
+        self.cal.show()
+        self.box.show()
+
+        self.dateButton = Gtk.Button(label="Choose date")
+        self.dateButton.connect('clicked', lambda x: self.popup.show())
+        self.pack_start(self.dateButton, False, False, 6)
+
+    def selected_date(self, event):
+        print self.cal.get_date()
+        print self.cal.get_display_options()
+        self.popup.hide()
 
 if __name__ == '__main__':
     win = Gtk.Window(title='Form test')
@@ -57,9 +75,7 @@ if __name__ == '__main__':
                      ('group', 'Sub Group'),
                      ('series', 'Series'),
                      ('landform', 'Landform'),
-
                      ('separator', ''),
-
                      ('slope-pos', 'Slope Position'),
                      ('sl-deg', 'Sl deg'),
                      ('aspect', 'Aspect')
@@ -77,9 +93,7 @@ if __name__ == '__main__':
                      ('group', 'Sub Group'),
                      ('sl-deg', 'Sl deg'),
                      ('landform', 'Landform'),
-
                      ('separator', ''),
-
                      ('database-no', 'Database Number'),
                      ('slope-pos', 'Slope Position'),
                      ('aspect', 'Aspect')
