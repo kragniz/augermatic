@@ -16,6 +16,8 @@ class Form(Gtk.Box):
                     entry = Gtk.SpinButton()
                     entry.set_adjustment(adjustment)
                     entry.set_digits(5)
+                elif item[0].startswith('date-'):
+                    entry = DateBox()
                 else:
                     entry = Gtk.Entry()
                 box = Gtk.Box()
@@ -35,6 +37,11 @@ class Form(Gtk.Box):
     def get_fields(self, *args):
         return {f:self.fields[f].get_text() for f in self.fields}
 
+class DateBox(Gtk.Box):
+    def __init__(self):
+        Gtk.Box.__init__(self)
+        self.pack_start(Gtk.Calendar(), False, False, 6)
+
 if __name__ == '__main__':
     win = Gtk.Window(title='Form test')
     win.set_default_size(500, 300)
@@ -42,7 +49,7 @@ if __name__ == '__main__':
     form = Form(
                   (
                      ('database-no', 'Database Number'),
-                     ('date', 'Date'),
+                     ('date-sample', 'Date'),
                      ('time', 'Time'),
                      ('float-lat', 'Latitude (N/S)'),
                      ('float-lon', 'Longitude (E/W)'),
