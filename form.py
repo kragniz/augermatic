@@ -46,7 +46,6 @@ class DateBox(Gtk.Box):
             box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
             self.add(box)
             box.pack_start(self.cal, False, False, 6)
-            self.cal.show()
 
             hbox = Gtk.Box()
             box.pack_start(hbox, True, True, 6)
