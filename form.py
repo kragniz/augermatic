@@ -43,7 +43,11 @@ class DateBox(Gtk.Box):
             Gtk.Window.__init__(self, type=Gtk.WindowType.POPUP)
             self.move(x, y)
             self.cal = Gtk.Calendar()
+            event = Gtk.EventBox()
+            self.add(event)
+
             box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+            event.add(box)
             self.add(box)
             box.pack_start(self.cal, False, False, 6)
 
@@ -57,10 +61,11 @@ class DateBox(Gtk.Box):
     def __init__(self):
         Gtk.Box.__init__(self)
         self.popup = self.CalendarPopup()
-        self.dateButton = Gtk.Button(label="Choose date")
-        self.dateButton.connect('clicked', self.open_popup)
+        self.popup.connect('leave-notify-event', self.leave_popup)
         self.popup.cal.connect('day-selected-double-click', self.selected_date)
         self.popup.okbutton.connect('clicked', self.selected_date)
+        self.dateButton = Gtk.Button(label="Choose date")
+        self.dateButton.connect('clicked', self.open_popup)
         self.pack_start(self.dateButton, False, False, 6)
 
     def open_popup(self, event):
@@ -69,9 +74,11 @@ class DateBox(Gtk.Box):
         self.popup.move(*pos)
         self.popup.show()
 
+    def leave_popup(self, *args):
+        self.popup.hide()
+
     def selected_date(self, event):
         print self.popup.cal.get_date()
-        
         self.popup.hide()
 
 if __name__ == '__main__':
@@ -101,13 +108,6 @@ if __name__ == '__main__':
                      ('date', 'Date'),
                      ('time', 'Time'),
                      ('grid', 'Grid Reference'),
-                     ('series', 'Series'),
-                     ('lat', 'Latitude (N/S)'),
-                     ('lon', 'Longitude (E/W)'),
-                     ('group', 'Sub Group'),
-                     ('sl-deg', 'Sl deg'),
-                     ('landform', 'Landform'),
-                     ('separator', ''),
                      ('database-no', 'Database Number'),
                      ('slope-pos', 'Slope Position'),
                      ('aspect', 'Aspect')
