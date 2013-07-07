@@ -58,13 +58,20 @@ class DateBox(Gtk.Box):
         Gtk.Box.__init__(self)
         self.popup = self.CalendarPopup()
         self.dateButton = Gtk.Button(label="Choose date")
-        self.dateButton.connect('clicked', lambda x: self.popup.show())
+        self.dateButton.connect('clicked', self.open_popup)
         self.popup.cal.connect('day-selected-double-click', self.selected_date)
         self.popup.okbutton.connect('clicked', self.selected_date)
         self.pack_start(self.dateButton, False, False, 6)
 
+    def open_popup(self, event):
+        pos = self.dateButton.get_window().get_origin()[1:]
+        print pos
+        self.popup.move(*pos)
+        self.popup.show()
+
     def selected_date(self, event):
         print self.popup.cal.get_date()
+        
         self.popup.hide()
 
 if __name__ == '__main__':
