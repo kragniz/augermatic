@@ -66,7 +66,10 @@ class DateBox(Gtk.Box):
         self.popup.okbutton.connect('clicked', self.selected_date)
         self.dateButton = Gtk.Button(label="Choose date")
         self.dateButton.connect('clicked', self.open_popup)
-        self.pack_start(self.dateButton, False, False, 6)
+        self.pack_end(self.dateButton, False, False, 6)
+
+        self.textbox = Gtk.Entry()
+        self.pack_start(self.textbox, True, True, 0)
 
     def open_popup(self, event):
         pos = self.dateButton.get_window().get_origin()[1:]
@@ -78,8 +81,12 @@ class DateBox(Gtk.Box):
         self.popup.hide()
 
     def selected_date(self, event):
-        print self.popup.cal.get_date()
+        date = self.popup.cal.get_date()
+        self.textbox.set_text('-'.join([str(v) for v in date]))
         self.popup.hide()
+
+    def get_text(self):
+        return self.textbox.get_text()
 
 if __name__ == '__main__':
     win = Gtk.Window(title='Form test')
