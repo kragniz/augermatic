@@ -82,7 +82,10 @@ class DateBox(Gtk.Box):
 
     def leave_popup(self, *args):
         self.popup.hide()
+        #hack to stop the toggle events being fired whenever the mouse leaves
+        self.dateButton.handler_block_by_func(self.open_popup)
         self.dateButton.set_active(False)
+        self.dateButton.handler_unblock_by_func(self.open_popup)
 
     def selected_date(self, event):
         date = self.popup.cal.get_date()
