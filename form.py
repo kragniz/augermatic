@@ -72,8 +72,12 @@ class DateBox(Gtk.Box):
         self.pack_start(self.textbox, True, True, 0)
 
     def open_popup(self, event):
-        pos = self.dateButton.get_window().get_origin()[1:]
-        print pos
+        windowPos = self.dateButton.get_window().get_origin()[1:]
+        allocation = self.dateButton.get_allocation()
+        pos = (
+                allocation.x + windowPos[0],
+                allocation.y + allocation.height + windowPos[1]
+              )
         self.popup.move(*pos)
         self.popup.show()
 
