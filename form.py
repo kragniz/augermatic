@@ -35,7 +35,13 @@ class Form(Gtk.VBox):
         print '-' * 80
 
     def get_fields(self, *args):
+        self.set_editable(False)
         return {f:self.fields[f].get_text() for f in self.fields}
+
+    def set_editable(self, value):
+        for f in self.fields:
+            field = self.fields[f]
+            field.set_sensitive(value)
 
 class DateBox(Gtk.Box):
     class CalendarPopup(Gtk.Window):
@@ -101,6 +107,10 @@ class DateBox(Gtk.Box):
 
     def get_text(self):
         return self.textbox.get_text()
+
+    def set_sensitive(self, value):
+        self.textbox.set_sensitive(value)
+        self.dateButton.set_sensitive(value)
 
 if __name__ == '__main__':
     win = Gtk.Window(title='Form test')
