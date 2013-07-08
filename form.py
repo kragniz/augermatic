@@ -69,16 +69,21 @@ class DateBox(Gtk.Box):
 
         self.textbox = Gtk.Entry()
         self.pack_start(self.textbox, True, True, 0)
+        self._popupOpen = False
 
     def open_popup(self, event):
-        windowPos = self.dateButton.get_window().get_origin()[1:]
-        allocation = self.dateButton.get_allocation()
-        pos = (
-                allocation.x + windowPos[0],
-                allocation.y + allocation.height + windowPos[1]
-              )
-        self.popup.move(*pos)
-        self.popup.show()
+        if not self._popupOpen:
+            windowPos = self.dateButton.get_window().get_origin()[1:]
+            allocation = self.dateButton.get_allocation()
+            pos = (
+                    allocation.x + windowPos[0],
+                    allocation.y + allocation.height + windowPos[1]
+                  )
+            self.popup.move(*pos)
+            self.popup.show()
+            self._popupOpen = True
+        else:
+            self.leave_popup()
 
     def leave_popup(self, *args):
         self.popup.hide()
@@ -86,6 +91,7 @@ class DateBox(Gtk.Box):
         self.dateButton.handler_block_by_func(self.open_popup)
         self.dateButton.set_active(False)
         self.dateButton.handler_unblock_by_func(self.open_popup)
+        self._popupOpen = False
 
     def selected_date(self, event):
         date = self.popup.cal.get_date()
