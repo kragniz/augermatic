@@ -64,7 +64,7 @@ class DateBox(Gtk.Box):
         self.popup.connect('leave-notify-event', self.leave_popup)
         self.popup.cal.connect('day-selected-double-click', self.selected_date)
         self.popup.okbutton.connect('clicked', self.selected_date)
-        self.dateButton = Gtk.Button(label="Choose date")
+        self.dateButton = Gtk.ToggleButton(label="Choose date")
         self.dateButton.connect('clicked', self.open_popup)
         self.pack_end(self.dateButton, False, False, 6)
 
@@ -88,6 +88,7 @@ class DateBox(Gtk.Box):
         date = self.popup.cal.get_date()
         self.textbox.set_text('-'.join([str(v) for v in date]))
         self.popup.hide()
+        self.dateButton.set_active(False)
 
     def get_text(self):
         return self.textbox.get_text()
