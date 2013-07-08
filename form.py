@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 from gi.repository import Gtk
 
-class Form(Gtk.Box):
+class Form(Gtk.VBox):
     def __init__(self, items):
-        Gtk.Box.__init__(self, spacing=6, orientation=Gtk.Orientation.VERTICAL)
+        Gtk.VBox.__init__(self, spacing=6)
         self.fields = {}
         labelWidth = max([len(i[1]) for i in items])
 
@@ -46,7 +46,7 @@ class DateBox(Gtk.Box):
             event = Gtk.EventBox()
             self.add(event)
 
-            box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+            box = Gtk.VBox()
             event.add(box)
             box.pack_start(self.cal, False, False, 6)
 
@@ -144,7 +144,7 @@ if __name__ == '__main__':
 
     scroll = Gtk.ScrolledWindow()
     scroll.add(hb)
-    box = Gtk.Box(spacing=6, orientation=Gtk.Orientation.VERTICAL)
+    box = Gtk.VBox()
     box.pack_start(scroll, True, True, 20)
 
     b = Gtk.Button(label='Show data')
