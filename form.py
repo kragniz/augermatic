@@ -48,7 +48,6 @@ class DateBox(Gtk.Box):
 
             box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
             event.add(box)
-            self.add(box)
             box.pack_start(self.cal, False, False, 6)
 
             hbox = Gtk.Box()
@@ -83,6 +82,7 @@ class DateBox(Gtk.Box):
 
     def leave_popup(self, *args):
         self.popup.hide()
+        self.dateButton.set_active(False)
 
     def selected_date(self, event):
         date = self.popup.cal.get_date()
