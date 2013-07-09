@@ -18,6 +18,9 @@ class Form(Gtk.VBox):
                     entry.set_digits(5)
                 elif item[0].startswith('date-'):
                     entry = DateBox()
+                elif item[0].startswith('check-'):
+                    entry = Gtk.CheckButton()
+                    entry.get_text = lambda: entry.get_active()
                 else:
                     entry = Gtk.Entry()
                 box = Gtk.Box()
@@ -120,6 +123,7 @@ if __name__ == '__main__':
                   (
                      ('database-no', 'Database Number'),
                      ('date-sample', 'Date'),
+                     ('check-sample', 'Date'),
                      ('time', 'Time'),
                      ('float-lat', 'Latitude (N/S)'),
                      ('float-lon', 'Longitude (E/W)'),
