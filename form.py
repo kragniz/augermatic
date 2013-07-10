@@ -38,7 +38,6 @@ class Form(Gtk.VBox):
         print '-' * 80
 
     def get_fields(self, *args):
-        self.set_editable(False)
         return {f:self.fields[f].get_text() for f in self.fields}
 
     def set_editable(self, value):
