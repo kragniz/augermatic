@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 from gi.repository import Gtk
+import types
 
 class Form(Gtk.VBox):
     def __init__(self, items):
@@ -20,7 +21,10 @@ class Form(Gtk.VBox):
                     entry = DateBox()
                 elif item[0].startswith('check-'):
                     entry = Gtk.CheckButton()
-                    entry.get_text = lambda: entry.get_active()
+                    #inject a new method to make getting the value consistant
+                    def get_text(self):
+                        return self.get_active()
+                    entry.get_text = types.MethodType(get_text, entry)
                 else:
                     entry = Gtk.Entry()
                 box = Gtk.Box()
