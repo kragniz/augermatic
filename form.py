@@ -21,7 +21,8 @@ class Form(Gtk.VBox):
                     entry = DateBox()
                 elif item[0].startswith('check-'):
                     entry = Gtk.CheckButton()
-                    #inject a new method to make getting the value consistant
+                    #inject a new method to make finding the current value of
+                    #the entry widgets externaly the same
                     def get_text(self):
                         return self.get_active()
                     entry.get_text = types.MethodType(get_text, entry)
