@@ -1,0 +1,7 @@
+!frontend
+    -Write horizon widget
+
+!backend
+    -Work out what the datastore's going to be
+        *JSON in a plain text file
+        *Use mongodb
